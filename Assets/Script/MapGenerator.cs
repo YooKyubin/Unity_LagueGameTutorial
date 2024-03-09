@@ -30,6 +30,17 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        // 나는 어째서 인지 영상과 다르게 이벤트 구독보다 spawner의 start 가 더빨라서 onNewWave 이벤트 발생 후 구독하는 순서다.
+        // 그래서 project settings > strip execution order 변경 -> Spawner가 가장 마지막에 start 호출하도록
+        //GenerateMap();
+        print("event sub : " + Time.time);
+        FindObjectOfType<Spawner>().OnNewWave += OnNewWave;
+        print("event sub : " + Time.time);
+    }
+
+    void OnNewWave(int waveNumber)
+    {
+        mapIndex = waveNumber - 1;
         GenerateMap();
     }
 

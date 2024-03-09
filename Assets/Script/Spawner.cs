@@ -28,6 +28,8 @@ public class Spawner : MonoBehaviour
 
     bool isDisabled;
 
+    public event System.Action<int> OnNewWave;
+
     void Start()
     {
         playerEntity = FindObjectOfType<Player>();
@@ -38,11 +40,16 @@ public class Spawner : MonoBehaviour
         playerEntity.OnDeath += OnPlayerDeath;
 
         map = FindObjectOfType<MapGenerator>();
-        NextWave();    
+
+        // 나는 어째서 인지 영상과 다르게 이벤트 구독보다 spawner의 start 가 더빨라서 onNewWave 이벤트 발생 후 구독하는 순서다.
+        // 그래서 project settings > strip execution order 변경 -> Spawner가 가장 마지막에 start 호출하도록
+        print("call new Wave event: " + Time.time);
+        NextWave();
+        print("call new Wave event: " + Time.time);
     }
     void Update()
     {
-        if (isDisabled) 
+        if (isDisabled)
             return;
 
         if (Time.time > nextCampCheckTime)
@@ -106,7 +113,12 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void NextWave()
+    void ResetPlayerPosition()
+    {
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * .5f;
+    }
+
+void NextWave()
     {
         currentWaveNumber++;
         if (currentWaveNumber - 1 < waves.Length)
@@ -115,6 +127,13 @@ public class Spawner : MonoBehaviour
 
             enemiesRemainingToSpawn = currentWave.enemyCount;
             enemiesRemainingAlive = enemiesRemainingToSpawn;
+
+            if (OnNewWave != null)
+            {
+                OnNewWave(currentWaveNumber);
+            }
+
+            ResetPlayerPosition();
         }
     }
 

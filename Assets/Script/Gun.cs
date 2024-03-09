@@ -9,7 +9,16 @@ public class Gun : MonoBehaviour
     public float msBetweenShots = 100; // 연사 per ms
     public float muzzleVelocity = 35; // 총말 발사되는 순간의 속도
 
+    public Transform shell;
+    public Transform shellEjection;
+    MuzzleFlash muzzleflash;
+
     float nextShotTime;
+
+    private void Start()
+    {
+        muzzleflash = GetComponent<MuzzleFlash>();
+    }
 
     public void Shoot()
     {
@@ -18,6 +27,9 @@ public class Gun : MonoBehaviour
             nextShotTime = Time.time + msBetweenShots / 1000;
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
+
+            Instantiate(shell, shellEjection.position, shellEjection.rotation);
+            muzzleflash.Activate();
         }
     }
 }

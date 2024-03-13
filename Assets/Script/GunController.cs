@@ -19,8 +19,8 @@ public class GunController : MonoBehaviour
 
     public void EquipGun(Gun gunToEquip)
     {
-        if (equippedGun != null) 
-        { 
+        if (equippedGun != null)
+        {
             Destroy(equippedGun.gameObject);
         }
         equippedGun = Instantiate(gunToEquip, weaponHold.position, weaponHold.rotation).GetComponent<Gun>();
@@ -47,8 +47,20 @@ public class GunController : MonoBehaviour
     {
         get
         {
-            return weaponHold.position.y; 
+            return weaponHold.position.y;
         }
-        
+
     }
+    public void Aim(Vector3 aimPoint)
+    {
+        if (equippedGun != null)
+            equippedGun.Aim(aimPoint);
+    }
+
+    public void Reload()
+    {
+        if (equippedGun != null)
+            equippedGun.Reload();
+    }
+
 }

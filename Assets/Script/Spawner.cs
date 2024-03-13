@@ -95,7 +95,7 @@ public class Spawner : MonoBehaviour
             spawnTile = map.GetTileFromPosition(playerT.position);
         }
         Material tileMat = spawnTile.GetComponent<Renderer>().material; // 이 시점에 tile 색상이 빨간색이였다면 계속 빨간색임. 색상 초기화 방법을 다시 생각해볼것
-        Color initialColor = tileMat.color;
+        Color initialColor = Color.white; // 아저씨가 이런식으로 버그수정함
         Color flashColor = Color.red;
         float spawnTimer = 0;
 

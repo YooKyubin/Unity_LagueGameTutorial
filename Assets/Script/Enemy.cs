@@ -76,7 +76,7 @@ public class Enemy : LivingEntity
         }
         startingHealth = enemyHealth;
 
-        skinMaterial = transform.Find("Graphics").gameObject.GetComponent<Renderer>().material;
+        skinMaterial = transform.Find("Graphics").gameObject.GetComponent<Renderer>().sharedMaterial;
         skinMaterial.color = skinColor;
         originalColor = skinMaterial.color;
     }

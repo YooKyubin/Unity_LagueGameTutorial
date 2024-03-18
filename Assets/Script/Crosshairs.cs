@@ -13,6 +13,8 @@ public class Crosshairs : MonoBehaviour
     {
         Cursor.visible = false; // 크로스헤어의 start에서 커서를 숨기기 때문에 더 게임 중 어떤 이유로 커서가 생기면 그 다음부턴 사라지지 않음
         originalDotColor = dot.color;
+        FindObjectOfType<Player>().OnDeath += OnGameOver; // 게임 오버 이후 커서 보이기 위함
+
     }
     void Update()
     {
@@ -29,5 +31,10 @@ public class Crosshairs : MonoBehaviour
         {
             dot.color = originalDotColor;
         }
+    }
+
+    void OnGameOver()
+    {
+        Cursor.visible = true;
     }
 }
